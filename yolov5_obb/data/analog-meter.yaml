@@ -1,0 +1,9 @@
+train: analog-meter/images/train/    # train images (relative to 'path') 
+val: analog-meter/images/valid/   # val images (relative to 'path') 
+
+# Classes
+nc: 2  # number of classes
+names: [
+  'needle',
+  'scale',
+]

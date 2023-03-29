@@ -1,0 +1,10 @@
+
+train: /home/ml/rajan/YOLO/data/processed_data/images/train/    # train images (relative to 'path') 
+val:  /home/ml/rajan/YOLO/data/processed_data/images/valid/   # val images (relative to 'path') 
+
+# Classes
+nc: 2  # number of classes
+names: [
+  'stamp',
+  'uno',
+]

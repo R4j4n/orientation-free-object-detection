@@ -1,0 +1,10 @@
+
+train: /home/rjn/Documents/detection/17/YOLO/data/processed_data/images/train/
+val:  /home/rjn/Documents/detection/17/YOLO/data/processed_data/images/train/
+
+# Classes
+nc: 15  # number of classes
+names: ['plane', 'baseball-diamond', 'bridge', 'ground-track-field', 'small-vehicle', 
+        'large-vehicle', 'ship', 'tennis-court', 'basketball-court', 'storage-tank',  
+        'soccer-ball-field', 'roundabout', 'harbor', 'swimming-pool', 'helicopter']  #
+

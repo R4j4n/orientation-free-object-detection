@@ -1,0 +1,10 @@
+
+train: uno_stamp/images/train/    # train images (relative to 'path') 
+val: uno_stamp/images/valid/   # val images (relative to 'path') 
+
+# Classes
+nc: 2  # number of classes
+names: [
+  'stamp',
+  'uno',
+]

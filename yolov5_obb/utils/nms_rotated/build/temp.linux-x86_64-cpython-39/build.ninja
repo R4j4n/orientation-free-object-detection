@@ -1,0 +1,31 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /opt/cuda/bin/nvcc
+
+cflags = -pthread -B /home/rjn/.conda/envs/yolo_rotated/compiler_compat -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -Wall -fPIC -O2 -isystem /home/rjn/.conda/envs/yolo_rotated/include -I/home/rjn/.conda/envs/yolo_rotated/include -fPIC -O2 -isystem /home/rjn/.conda/envs/yolo_rotated/include -fPIC -DWITH_CUDA -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/torch/csrc/api/include -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/TH -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/THC -I/opt/cuda/include -I/home/rjn/.conda/envs/yolo_rotated/include/python3.9 -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=nms_rotated_ext -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+cuda_cflags = -DWITH_CUDA -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/torch/csrc/api/include -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/TH -I/home/rjn/.conda/envs/yolo_rotated/lib/python3.9/site-packages/torch/include/THC -I/opt/cuda/include -I/home/rjn/.conda/envs/yolo_rotated/include/python3.9 -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=nms_rotated_ext -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_61,code=compute_61 -gencode=arch=compute_61,code=sm_61 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc  $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+build /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-39/src/nms_rotated_cpu.o: compile /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/src/nms_rotated_cpu.cpp
+build /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-39/src/nms_rotated_cuda.o: cuda_compile /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/src/nms_rotated_cuda.cu
+build /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-39/src/nms_rotated_ext.o: compile /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/src/nms_rotated_ext.cpp
+build /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/build/temp.linux-x86_64-cpython-39/src/poly_nms_cuda.o: cuda_compile /home/rjn/Documents/detection/17/YOLO/yolov5_obb/utils/nms_rotated/src/poly_nms_cuda.cu
+
+
+
+
+
