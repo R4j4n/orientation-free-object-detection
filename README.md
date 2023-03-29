@@ -9,6 +9,18 @@ This repo is the direct clone of [this repo](https://github.com/hukaixuan1997062
 <img width=600 src="assets/P2150.png">
 </p>
 
+### Step 1: Environment setup.
+* * * 
+You must have already installed cuda and cudnn.
+Use  ```nvidia-smi``` and ```nvcc -V``` to check availablity.
+
+Execute the following command to install and activate environment.
+```
+source install_env.sh 
+
+```
+
+
 ### Step 2: Downloading the data.
 * * * 
 In order to download the dataset, first you need to download your Kaggle API key. Please follow the following steps to download the dataset. 
